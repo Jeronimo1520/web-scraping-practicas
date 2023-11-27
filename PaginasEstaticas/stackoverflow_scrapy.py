@@ -1,14 +1,8 @@
-from scrapy.item import Field
-from scrapy.item import Item
-from scrapy.spiders import Spider
-from scrapy.selector import Selector
-from scrapy.loader import ItemLoader
-
 """
 OBJETIVO: 
     - Extraer las preguntas de la pagina principal de Stackoverflow con Scrapy"""
 
-#Scrapa pagina estatica con scrapy
+#Scrapy pagina estatica con scrapy
 
 from scrapy.item import Field
 from scrapy.item import Item

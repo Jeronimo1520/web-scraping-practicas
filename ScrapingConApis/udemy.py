@@ -16,6 +16,9 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/119.0.0.0 Safari/537.36"
 }
+
+cursos_totales = []
+
 for i in range(1,4):
     url_api = 'https://www.udemy.com/api-2.0/search-courses/?src=ukw&q=python&skip_price=true&p=' + str(i)
     response = requests.get(url_api, headers=headers)
@@ -26,7 +29,12 @@ for i in range(1,4):
     cursos = data["courses"]
 
     for curso in cursos:
-        print(curso["title"])
-        print(curso["num_reviews"])
-        print(curso["rating"])
-        print()
+        cursos_totales.append({
+            "titulo": curso["title"],
+            "num_reviews": curso["num_reviews"],
+            "rating": curso["rating"]
+        })
+
+df = pd.DataFrame(cursos_totales)
+print(df)
+df.to_csv("cursos_udemy.csv")

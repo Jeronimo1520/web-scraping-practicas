@@ -1,0 +1,77 @@
+Es necesario hacer web scraping responsable,
+si voy a hacer descargas masivas debo entender que esa data no me pertenece.
+
+Si hago muchos requerimientos a una pagina de manera desmezurada sin usar timeouts o de muy
+poco tiempo, el servidor se puede colapsar, a manera de un DDOS.
+
+Poner siempre timeouts para cada requests.
+
+Hacer descargas segmentadas, es mejor extraer 10 mil datos al dia, que 100mil en una noche,
+para no saturar los servidores.
+
+Los servidores tienen mecanismos de cuotas de requermientos, si este numero sobrepasa cierta valor
+automaticamente la IP es baneada y el servidor respondera con un codigo 403 Forbidden.
+
+Es importante dar credito de la informacion en caso de informacion cientifica, o para investigacion
+, asi como asegurarse de la legalidad de compartir esa informacion si no es publica.
+
+#Como evitar baneos:
+
+https://www.scrapehero.com/how-to-prevent-getting-blacklisted-while-scraping/
+
+- Limitar el numero de requerimientos en un intervalo de tiempo
+
+- Limitar cantidad de datos descargados por dia.
+
+- Humanizar nuestro comportamiento, usar tiempos aleatorios, usar user agents.
+
+- No intentar hacer web scraping de manera masiva en la pc personal, ya que si la IP
+es baneada, no puede haber vuelta atras. Una solucion a esto es usar maquinas virtuales,
+ya que cada una tiene un IP diferente, se puede hacer uso de la nube como Amazon EC2,
+si me banean una maquina, puedo crear otra.
+
+# User agents y VPN:
+
+Cloud Computing es utilizar computadoras que están en la "nube" en vez de nuestras máquinas personales. La "nube" no es nada más que ejércitos de computadoras pero que están bajo la propiedad de un proveedor de servicios como Amazon Web Services o Google.
+
+Por lo que, utilizando Cloud Computing, debido a que estamos utilizando computadoras que no son nuestras, de cierto modo si nos banean no es mayor problema ya que podemos simplemente "pedir" otra nueva computadora para utilizar.
+
+Un ejemplo específico seria utilizar el servicio EC2 de AWS, alquilar una máquina virtual por hora. Y ejecutar desde allí un script de extracción.
+
+Todo es exactamente lo mismo, pero cambia la IP del cual hacemos los requerimientos. Si nos banean, no pasa nada. Alquilamos otra máquina y volvemos a ejecutar nuestros scripts de extracción desde esta nueva máquina. Será un poco molestoso ya que alistar la nueva máquina demora unos 5-10 minutos y es un proceso (usualmente) manual.
+
+Por otro lado,
+
+Las VPNs por detrás son un Proxy. Un Proxy en palabras sencillas es un intermediario por el que pasan todos los requerimientos que hagamos. Por lo que el requerimiento siempre va a llegar como si fuera desde otra IP diferente, gracias al Proxy. Y si banean esta IP, nuestra máquina estará a salvo. Y en este caso deberemos de cambiar la IP del Proxy.
+
+Un ejemplo específico sería tener una VPN y hacer la extracción estando conectados a la VPN. Si nos banean, podemos cambiarnos de país en la VPN que tengamos, lo cual hará que tengamos otra IP diferente.
+
+
+
+
+
+Ahora, evidentemente se pueden combinar ambos conceptos. Es decir, utilizar un Proxy desde una máquina en la nube. Pero al final, cual es la diferencia, verdad? Al final todo lo que hacemos es cambiar nuestra IP...
+
+Lo interesante es que con los proxies, el cambio puede suceder en el código. Y en realidad, esto es lo que hacen servicios como ScrapingHub (ahora llamado Zyte). Tienen granjas de miles y miles de Proxies. De modo que, cada requerimiento que hacen nuestros scripts, por ejemplo de Scrapy, salen de una IP diferente. Y apenas ellos detectan que una IP ha sido baneada por la página a la cual estamos realizando la extracción, la remplazan por otra.
+
+
+
+Por lo que, al combinar conceptos lo que se busca es lo siguiente:
+
+1. Con Cloud Computing dejamos de depender de nuestro entorno físico. Es decir, como estamos utilizando computadoras en la nube, no importa lo que suceda en nuestras computadoras en nuestra casa. La extracción va a continuar. Dejamos de preocuparnos de problemas de si se nos va la luz, nuestra computadora se reinicia por una actalización o error, o si nos quedamos sin internet en nuestros hogares.
+
+2. Con VPNs (Proxies) ganamos estabilidad en la extracción. Ya que un baneo de IPs, es algo que podemos resolver automáticamente en el código mismo utilizando otro proxy (algo que hacen automáticamente herramientas como Zyte)
+
+3. Con ambos protegemos finalmente nuestra IP de nuestra computadora de baneos.
+
+
+User agents: cadena de texto que le indica al servidor que navegador y sistema operativo usa el usuario
+
+Siempre hay que declararlo, ya que por defecto es: Robot.
+
+Se puede ir cambiando cada N requerimientos para que el sitio web no descubra el web scraping.
+
+VPN: Es una tecnologia que permite conectar una computadora a una red privada virtual del internet,
+de manera segura. Sin necesidad de que el cliente y la red esten conectados fisicamente.
+
+

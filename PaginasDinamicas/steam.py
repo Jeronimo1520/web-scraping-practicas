@@ -19,15 +19,15 @@ def parse_games(data):
     for game in games:
         title = game.find('span', class_='title').text
         try:
-            price = game.find('div', class_ = 'discount_final_price').text.strip().split('COL')
+            price = game.find('div', class_ = 'discount_final_price').text.strip().split('COL$')[1]
         except:
             price = 'N/A'
         try:
-           discount_original_price = game.find('div', class_='discount_original_price').text.strip()
+           discount_original_price = game.find('div', class_='discount_original_price').text.strip().split('COL$')[1]
         except:
             discount_original_price = 'N/A'
         try:
-            discount = game.find('div', class_='discount_pct').text.strip()
+            discount = game.find('div', class_='discount_pct').text.strip().split('-')[1].replace('%','')
         except:
             discount = 'N/A'
 
